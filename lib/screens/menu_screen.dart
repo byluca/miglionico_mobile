@@ -1,224 +1,161 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
 
   @override
-  MenuScreenState createState() => MenuScreenState();
+  State<MenuScreen> createState() => _MenuScreenState();
 }
 
-class MenuScreenState extends State<MenuScreen> {
-  // Indice selezionato per il BottomNavigationBar
-  int _selectedIndex = 0;
+class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Color?> _colorAnimation1;
+  late Animation<Color?> _colorAnimation2;
 
-  // Handler per il cambio di tab nel BottomNavigationBar
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    // Qui puoi gestire la navigazione in base al valore di index
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..repeat(reverse: true);
+
+    _colorAnimation1 = ColorTween(
+      begin: Colors.brown[300],
+      end: Colors.teal[300],
+    ).animate(_controller);
+
+    _colorAnimation2 = ColorTween(
+      begin: Colors.orange[300],
+      end: Colors.purple[300],
+    ).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // AppBar leggermente personalizzata
       appBar: AppBar(
-        title: const Text('Benvenuto a Miglionico!'),
-        backgroundColor: Colors.brown[600],
-        elevation: 4,
-      ),
-      // Corpo della schermata con uno sfondo personalizzato
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFD7CCC8), Color(0xFFBCAAA4)], // gradiente chiaro
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+        title: const Text(
+          'Esplora Miglionico',
+          style: TextStyle(fontFamily: 'Raleway'),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 30),
-              // Inseriamo un leggero fadeIn
-              TweenAnimationBuilder(
-                tween: Tween<double>(begin: 0, end: 1),
-                duration: const Duration(seconds: 2),
-                builder: (context, double opacity, child) {
-                  return Opacity(
-                    opacity: opacity,
-                    child: child,
-                  );
-                },
-                child: const Text(
-                  'Ciao! Benvenuto a Miglionico!',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.brown,
+        backgroundColor: Colors.brown[900],
+        elevation: 0,
+      ),
+      body: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  _colorAnimation1.value ?? Colors.brown,
+                  _colorAnimation2.value ?? Colors.orange,
+                ],
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GridView.count(
+                crossAxisCount: 2, // Due colonne per la griglia
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: [
+                  _buildMenuTile(
+                    context,
+                    'Storia di Miglionico',
+                    FontAwesomeIcons.book,
+                    Colors.teal,
+                    '/history',
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                  _buildMenuTile(
+                    context,
+                    'Luoghi da Visitare',
+                    FontAwesomeIcons.mapMarkerAlt,
+                    Colors.blueAccent,
+                    '/places',
+                  ),
+                  _buildMenuTile(
+                    context,
+                    'Eventi e Feste',
+                    FontAwesomeIcons.calendarAlt,
+                    Colors.orange,
+                    '/events',
+                  ),
+                  _buildMenuTile(
+                    context,
+                    'Dove Mangiare',
+                    FontAwesomeIcons.utensils,
+                    Colors.redAccent,
+                    '/food',
+                  ),
+                  _buildMenuTile(
+                    context,
+                    'Notizie e Aggiornamenti',
+                    FontAwesomeIcons.newspaper,
+                    Colors.green,
+                    '/news',
+                  ),
+                  _buildMenuTile(
+                    context,
+                    'Acquista Prodotti Locali',
+                    FontAwesomeIcons.shoppingBasket,
+                    Colors.purple,
+                    '/shop',
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'Scopri le meraviglie storiche e culturali del nostro borgo.',
-                style: TextStyle(fontSize: 16, color: Colors.black87),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 40),
-              // Qui aggiungiamo un effetto di "scale in" sui pulsanti
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    _buildAnimatedMenuButton(
-                      context,
-                      title: 'Storia di Miglionico',
-                      icon: Icons.history,
-                      delay: 0.2,
-                      onTap: () {
-                        // Naviga alla schermata "Storia di Miglionico"
-                      },
-                    ),
-                    _buildAnimatedMenuButton(
-                      context,
-                      title: 'Luoghi da Visitare',
-                      icon: Icons.location_on,
-                      delay: 0.4,
-                      onTap: () {
-                        // Naviga alla schermata "Luoghi da Visitare"
-                      },
-                    ),
-                    _buildAnimatedMenuButton(
-                      context,
-                      title: 'Eventi e Feste',
-                      icon: Icons.event,
-                      delay: 0.6,
-                      onTap: () {
-                        // Naviga alla schermata "Eventi e Feste"
-                      },
-                    ),
-                    _buildAnimatedMenuButton(
-                      context,
-                      title: 'Dove Mangiare',
-                      icon: Icons.restaurant,
-                      delay: 0.8,
-                      onTap: () {
-                        // Naviga alla schermata "Dove Mangiare"
-                      },
-                    ),
-                    _buildAnimatedMenuButton(
-                      context,
-                      title: 'Contatti e Info',
-                      icon: Icons.info,
-                      delay: 1.0,
-                      onTap: () {
-                        // Naviga alla schermata "Contatti e Info"
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
-      ),
-      // BottomNavigationBar con l'indice gestito da _selectedIndex
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event),
-            label: 'Eventi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Mappa',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info',
-          ),
-        ],
-        selectedItemColor: Colors.brown[800],
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  // Costruiamo un pulsante animato per il menu
-  Widget _buildAnimatedMenuButton(
-      BuildContext context, {
-        required String title,
-        required IconData icon,
-        required VoidCallback onTap,
-        required double delay,
-      }) {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0.8, end: 1),
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeOutBack,
-      builder: (context, double scale, child) {
-        return Transform.scale(
-          scale: scale,
-          child: child,
-        );
-      },
-      // Usiamo un Delay basato su un Future.delayed
-      child: FutureBuilder<void>(
-        future: Future.delayed(Duration(milliseconds: (delay * 1000).round())),
-        builder: (context, snapshot) {
-          // Quando il future è completato, mostriamo il pulsante
-          if (snapshot.connectionState == ConnectionState.done) {
-            return _buildMenuButton(
-              context,
-              title: title,
-              icon: icon,
-              onTap: onTap,
-            );
-          } else {
-            // Nel frattempo, mettiamo un Container “invisibile” (o un placeholder)
-            return const SizedBox(height: 0);
-          }
+            ),
+          );
         },
       ),
     );
   }
 
-  // Pulsante classico (ma personalizzato con stile)
-  Widget _buildMenuButton(
-      BuildContext context, {
-        required String title,
-        required IconData icon,
-        required VoidCallback onTap,
-      }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.brown,
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 3,
-        ),
-        onPressed: onTap,
-        icon: Icon(icon, size: 24),
-        label: Text(
-          title,
-          style: const TextStyle(fontSize: 18),
+  Widget _buildMenuTile(
+      BuildContext context,
+      String title,
+      IconData icon,
+      Color color,
+      String route,
+      ) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, route);
+      },
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        color: color,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FaIcon(
+              icon,
+              color: Colors.white,
+              size: 40,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ],
         ),
       ),
     );
