@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'screens/welcome_screen.dart';
 import 'screens/menu_screen.dart';
-import 'screens/contacts_screen.dart';
-import 'screens/locations_screen.dart';
-import 'screens/events_screen.dart';
-import 'screens/about_screen.dart';
 
 void main() {
   runApp(const MiglionicoApp());
@@ -16,21 +12,21 @@ class MiglionicoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Miglionico App',
+      debugShowCheckedModeBanner: false,
+      title: 'Miglionico Mobile',
       theme: ThemeData(
         primarySwatch: Colors.brown,
-        textTheme: Theme.of(context).textTheme.copyWith(
-          headlineSmall: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        fontFamily: 'Raleway',
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          bodyMedium: TextStyle(fontSize: 16),
         ),
       ),
-      initialRoute: '/',
+      // Definiamo le route in modo da poter navigare tra WelcomeScreen e MenuScreen
+      initialRoute: '/welcome',
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/welcome': (context) => const WelcomeScreen(),
         '/menu': (context) => const MenuScreen(),
-        '/contacts': (context) => const ContactsScreen(),
-        '/locations': (context) => const LocationsScreen(),
-        '/events': (context) => const EventsScreen(),
-        '/about': (context) => const AboutScreen(),
       },
     );
   }
