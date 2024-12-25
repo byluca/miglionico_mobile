@@ -67,7 +67,7 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: GridView.count(
-                crossAxisCount: 2, // Due colonne per la griglia
+                crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
                 children: [
@@ -76,42 +76,49 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                     'Storia di Miglionico',
                     FontAwesomeIcons.book,
                     Colors.teal,
-                    '/history',
+                    '/history', // Assicurati che questa rotta sia definita
                   ),
                   _buildMenuTile(
                     context,
                     'Luoghi da Visitare',
                     FontAwesomeIcons.mapMarkerAlt,
                     Colors.blueAccent,
-                    '/places',
+                    '/places', // Assicurati che questa rotta sia definita
                   ),
                   _buildMenuTile(
                     context,
                     'Eventi e Feste',
                     FontAwesomeIcons.calendarAlt,
                     Colors.orange,
-                    '/events',
+                    '/events', // Assicurati che questa rotta sia definita
                   ),
                   _buildMenuTile(
                     context,
                     'Dove Mangiare',
                     FontAwesomeIcons.utensils,
                     Colors.redAccent,
-                    '/food',
+                    '/food', // Assicurati che questa rotta sia definita
                   ),
                   _buildMenuTile(
                     context,
                     'Notizie e Aggiornamenti',
                     FontAwesomeIcons.newspaper,
                     Colors.green,
-                    '/news',
+                    '/news', // Assicurati che questa rotta sia definita
                   ),
                   _buildMenuTile(
                     context,
                     'Acquista Prodotti Locali',
                     FontAwesomeIcons.shoppingBasket,
                     Colors.purple,
-                    '/shop',
+                    '/shop', // Assicurati che questa rotta sia definita
+                  ),
+                  _buildMenuTile(
+                    context,
+                    'PagoPA',
+                    FontAwesomeIcons.creditCard,
+                    Colors.green,
+                    '/pagoPA', // Aggiungi la rotta per PagoPA
                   ),
                 ],
               ),
