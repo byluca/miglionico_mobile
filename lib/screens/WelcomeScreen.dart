@@ -84,17 +84,13 @@ class WelcomeScreenState extends State<WelcomeScreen>
                 // Pulsante per accedere al menu principale
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/menu');
+                    Navigator.pushReplacementNamed(context, '/main'); // Naviga a '/main'
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,  // colore di sfondo pulsante
-                    foregroundColor: Colors.brown[700],  // colore del testo
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 36, vertical: 14),
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    backgroundColor: Colors.white, // Colore di sfondo pulsante
+                    foregroundColor: Colors.brown[700], // Colore del testo
+                    padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 14),
+                    textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

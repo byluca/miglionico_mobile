@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'screens/WelcomeScreen.dart';
 import 'screens/menu/News.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       title: 'Miglionico Mobile',
       initialRoute: '/',
       routes: {
-        '/': (context) => const MainScreen(), // Schermata iniziale con News e Menu
+        '/': (context) => const WelcomeScreen(), // Schermata iniziale
+        '/main': (context) => const MainScreen(), // Schermata principale con menu e notizie
         '/weather': (context) => const WeatherScreen(),
         '/imu': (context) => const IMUScreen(),
         '/schoolCanteen': (context) => const SchoolCanteenScreen(),
