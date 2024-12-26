@@ -5,10 +5,10 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Manteniamo la struttura: Scaffold + AppBar + body con NewsFeed
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notizie e Aggiornamenti'),
-        backgroundColor: Colors.teal,
       ),
       body: const NewsFeed(),
     );
@@ -26,12 +26,14 @@ class _NewsFeedState extends State<NewsFeed> {
   final List<Map<String, String>> _posts = [
     {
       'title': 'Evento Medievale',
-      'content': 'Un grande evento medievale si terrà a Miglionico questo fine settimana! Non mancare!',
+      'content':
+      'Un grande evento medievale si terrà a Miglionico questo fine settimana! Non mancare!',
       'image': 'https://via.placeholder.com/400x200',
     },
     {
       'title': 'Aggiornamento sulla viabilità',
-      'content': 'La strada principale sarà chiusa per lavori fino al 15 gennaio.',
+      'content':
+      'La strada principale sarà chiusa per lavori fino al 15 gennaio.',
       'image': 'https://via.placeholder.com/400x200',
     },
     {
@@ -40,8 +42,9 @@ class _NewsFeedState extends State<NewsFeed> {
       'image': 'https://via.placeholder.com/400x200',
     },
     {
-      'title': 'Offerta speciale Prodotti Locali',
-      'content': 'Scopri le offerte imperdibili sui prodotti locali al mercato di Miglionico.',
+      'title': 'Offerta speciale Prodotti Locali SKRT SKRT SKRT',
+      'content':
+      'Scopri le offerte imperdibili sui prodotti locali al mercato di Miglionico.',
       'image': 'https://via.placeholder.com/400x200',
     },
   ];
@@ -77,17 +80,20 @@ class NewsPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       child: Card(
+        // Forma e ombra più morbide
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(16.0),
         ),
-        elevation: 4.0,
+        elevation: 5.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Immagine con bordi arrotondati in alto
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+              borderRadius:
+              const BorderRadius.vertical(top: Radius.circular(16.0)),
               child: Image.network(
                 imageUrl,
                 height: 200,
@@ -95,6 +101,7 @@ class NewsPost extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+            // Contenuto testuale
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -103,6 +110,7 @@ class NewsPost extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
+                      fontFamily: 'Raleway',
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -111,16 +119,19 @@ class NewsPost extends StatelessWidget {
                   Text(
                     content,
                     style: const TextStyle(
+                      fontFamily: 'Raleway',
                       fontSize: 14,
                       color: Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 8.0),
+                  // Pulsanti Like/Comment/Share
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
                         icon: const Icon(Icons.favorite_border),
+                        color: Colors.redAccent,
                         onPressed: () {
                           // Aggiungi funzionalità di "Mi Piace"
                         },

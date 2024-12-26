@@ -10,7 +10,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-  // Creiamo un controller per la nostra animazione
+  // Controller per la nostra animazione
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
 
@@ -20,7 +20,7 @@ class WelcomeScreenState extends State<WelcomeScreen>
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 2));
 
-    // Definiamo un’animazione di fade-in
+    // Animazione di fade-in
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeIn),
     );
@@ -38,11 +38,12 @@ class WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Usando un Container con un gradiente di sfondo
+      // Container con gradiente di sfondo
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF5D4037), Color(0xFF3E2723)], // Gradiente marrone
+            // Gradiente in tema "teal scuro"
+            colors: [Color(0xFF004D40), Color(0xFF00796B)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -59,6 +60,7 @@ class WelcomeScreenState extends State<WelcomeScreen>
                     TypewriterAnimatedText(
                       'Ciao!',
                       textStyle: const TextStyle(
+                        fontFamily: 'Raleway',
                         fontSize: 40.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -68,6 +70,7 @@ class WelcomeScreenState extends State<WelcomeScreen>
                     TypewriterAnimatedText(
                       'Benvenuto a Miglionico!',
                       textStyle: const TextStyle(
+                        fontFamily: 'Raleway',
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -84,13 +87,21 @@ class WelcomeScreenState extends State<WelcomeScreen>
                 // Pulsante per accedere al menu principale
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/main'); // Naviga a '/main'
+                    Navigator.pushReplacementNamed(context, '/main');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // Colore di sfondo pulsante
-                    foregroundColor: Colors.brown[700], // Colore del testo
-                    padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 14),
-                    textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    // Ora attinge ai colori del Theme, ma se vuoi:
+                    backgroundColor: Colors.tealAccent[700],
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 36,
+                      vertical: 14,
+                    ),
+                    textStyle: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Raleway',
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

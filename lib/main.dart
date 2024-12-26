@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'screens/WelcomeScreen.dart';
 import 'screens/menu/News.dart';
+import 'screens/menu/Weather.dart'; // <-- Import della NUOVA WeatherScreen con API
 
 void main() {
   runApp(const MyApp());
@@ -15,11 +16,60 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Miglionico Mobile',
+      // Rimuovi se non vuoi la scritta "debug" in alto a destra
+      debugShowCheckedModeBanner: false,
+
+      // THEME MODIFICATO: palette colori + font + stile globale
+      theme: ThemeData(
+        // Colore primario dell’app
+        primaryColor: const Color(0xFF00796B),
+        // Definisci colori base
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: const Color(0xFF00796B),
+          secondary: const Color(0xFFFBC02D), // un giallo dorato come secondario
+        ),
+        // Imposta un font di base
+        fontFamily: 'Raleway',
+
+        // Stile dell’AppBar
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF00796B),
+          foregroundColor: Colors.white,
+          elevation: 2,
+          titleTextStyle: TextStyle(
+            fontFamily: 'Raleway',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        // Stile dei pulsanti ElevatedButton
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor:
+            MaterialStatePropertyAll<Color>(Color(0xFF00796B)),
+            foregroundColor:
+            MaterialStatePropertyAll<Color>(Colors.white),
+            shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+              ),
+            ),
+            textStyle: const MaterialStatePropertyAll<TextStyle>(
+              TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+
+        // Colore di sfondo generale degli Scaffold
+        scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+      ),
+
       initialRoute: '/',
       routes: {
-        '/': (context) => const WelcomeScreen(), // Schermata iniziale
-        '/main': (context) => const MainScreen(), // Schermata principale con menu e notizie
-        '/weather': (context) => const WeatherScreen(),
+        '/': (context) => const WelcomeScreen(),
+        '/main': (context) => const MainScreen(),
+        '/weather': (context) => const WeatherScreen(), // Usa la NUOVA classe
         '/imu': (context) => const IMUScreen(),
         '/schoolCanteen': (context) => const SchoolCanteenScreen(),
         '/schoolTransport': (context) => const SchoolTransportScreen(),
@@ -40,24 +90,43 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // L’AppBar ora prende automaticamente i colori dal tema
       appBar: AppBar(
         title: const Text(
           'Notizie e Aggiornamenti',
-          style: TextStyle(fontFamily: 'Raleway'),
+          // Il fontFamily è già impostato dal ThemeData
         ),
-        backgroundColor: Colors.teal,
       ),
       drawer: Drawer(
+        // Forma arrotondata per il Drawer laterale
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(24),
+            bottomRight: Radius.circular(24),
+          ),
+        ),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(color: Colors.teal),
+              // Gradiente di sfondo nell’header
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF00796B),
+                    Color(0xFF004D40),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
               child: const Text(
                 'Menu Principale',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Raleway',
                 ),
               ),
             ),
@@ -73,13 +142,19 @@ class MainScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: const NewsScreen(), // Mostra la schermata delle notizie come contenuto principale
+      body: const NewsScreen(), // Mostra la schermata delle notizie
     );
   }
 
-  Widget _buildDrawerTile(BuildContext context, String title, IconData icon, String route) {
+  Widget _buildDrawerTile(
+      BuildContext context,
+      String title,
+      IconData icon,
+      String route
+      ) {
     return ListTile(
-      leading: FaIcon(icon, color: Colors.teal),
+      // Icone scure (anziché bianche) per risaltare sul Drawer chiaro
+      leading: FaIcon(icon, color: Colors.grey[800]),
       title: Text(title),
       onTap: () {
         Navigator.pushNamed(context, route);
@@ -89,26 +164,6 @@ class MainScreen extends StatelessWidget {
 }
 
 /// SCHERMATE NUOVE
-class WeatherScreen extends StatelessWidget {
-  const WeatherScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Meteo'),
-        backgroundColor: Colors.teal,
-      ),
-      body: const Center(
-        child: Text(
-          'Informazioni meteo in tempo reale.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
-
 class IMUScreen extends StatelessWidget {
   const IMUScreen({Key? key}) : super(key: key);
 
@@ -117,7 +172,6 @@ class IMUScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('IMU IUC TASI'),
-        backgroundColor: Colors.teal,
       ),
       body: const Center(
         child: Text(
@@ -137,7 +191,6 @@ class SchoolCanteenScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mensa Scolastica'),
-        backgroundColor: Colors.teal,
       ),
       body: const Center(
         child: Text(
@@ -157,7 +210,6 @@ class SchoolTransportScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Trasporto Scolastico'),
-        backgroundColor: Colors.teal,
       ),
       body: const Center(
         child: Text(
@@ -177,7 +229,6 @@ class FeedbackScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Valuta Miglionico'),
-        backgroundColor: Colors.teal,
       ),
       body: const Center(
         child: Text(
@@ -197,7 +248,6 @@ class RecyclingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Raccolta Differenziata'),
-        backgroundColor: Colors.teal,
       ),
       body: const Center(
         child: Text(
@@ -217,7 +267,6 @@ class ReservationsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Prenotazioni Servizi'),
-        backgroundColor: Colors.teal,
       ),
       body: const Center(
         child: Text(
@@ -237,7 +286,6 @@ class PagoPAScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('PagoPA'),
-        backgroundColor: Colors.teal,
       ),
       body: const Center(
         child: Text(
@@ -257,7 +305,6 @@ class ContactsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contatti e Info'),
-        backgroundColor: Colors.teal,
       ),
       body: const Center(
         child: Text(
