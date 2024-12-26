@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'screens/WelcomeScreen.dart';
 import 'screens/menu/News.dart';
-import 'screens/menu/Weather.dart'; // <-- Import della NUOVA WeatherScreen con API
+import 'screens/menu/Weather.dart';
+import 'screens/menu/Contacts.dart';
+import 'screens/menu/Feedback.dart';
+import 'screens/menu/IMU.dart';
+import 'screens/menu/MenuScreen.dart';
+import 'screens/menu/PagoPA.dart';
+import 'screens/menu/Recycling.dart';
+import 'screens/menu/Reservations.dart';
+import 'screens/menu/SchoolCanteen.dart';
+import 'screens/menu/SchoolTransport.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -163,155 +173,18 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-/// SCHERMATE NUOVE
-class IMUScreen extends StatelessWidget {
-  const IMUScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('IMU IUC TASI'),
-      ),
-      body: const Center(
-        child: Text(
-          'Informazioni su IMU, IUC e TASI.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
 
-class SchoolCanteenScreen extends StatelessWidget {
-  const SchoolCanteenScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mensa Scolastica'),
-      ),
-      body: const Center(
-        child: Text(
-          'Dettagli sul servizio di mensa scolastica.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
 
-class SchoolTransportScreen extends StatelessWidget {
-  const SchoolTransportScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Trasporto Scolastico'),
-      ),
-      body: const Center(
-        child: Text(
-          'Informazioni sul trasporto scolastico.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
 
-class FeedbackScreen extends StatelessWidget {
-  const FeedbackScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Valuta Miglionico'),
-      ),
-      body: const Center(
-        child: Text(
-          'Lascia il tuo feedback per Miglionico.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
 
-class RecyclingScreen extends StatelessWidget {
-  const RecyclingScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Raccolta Differenziata'),
-      ),
-      body: const Center(
-        child: Text(
-          'Guida alla raccolta differenziata a Miglionico.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
 
-class ReservationsScreen extends StatelessWidget {
-  const ReservationsScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Prenotazioni Servizi'),
-      ),
-      body: const Center(
-        child: Text(
-          'Prenota servizi pubblici comodamente.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
 
-class PagoPAScreen extends StatelessWidget {
-  const PagoPAScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('PagoPA'),
-      ),
-      body: const Center(
-        child: Text(
-          'Collegamento al servizio PagoPA.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
 
-class ContactsScreen extends StatelessWidget {
-  const ContactsScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contatti e Info'),
-      ),
-      body: const Center(
-        child: Text(
-          'Dettagli di contatto e informazioni utili.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
