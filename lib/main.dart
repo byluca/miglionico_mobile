@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'screens/menu/News.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Miglionico Mobile',
       initialRoute: '/',
       routes: {
-        '/': (context) => const WelcomeScreen(),
-        '/menu': (context) => const MenuScreen(),
+        '/': (context) => const MainScreen(), // Schermata iniziale con News e Menu
         '/weather': (context) => const WeatherScreen(),
         '/imu': (context) => const IMUScreen(),
         '/schoolCanteen': (context) => const SchoolCanteenScreen(),
@@ -32,105 +31,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// SCHERMATA DI BENVENUTO (WelcomeScreen)
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+/// Schermata principale con NewsScreen e Menu laterale
+class MainScreen extends StatelessWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
-  @override
-  WelcomeScreenState createState() => WelcomeScreenState();
-}
-
-class WelcomeScreenState extends State<WelcomeScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _fadeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    );
-
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
-
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF5D4037), Color(0xFF3E2723)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Center(
-          child: FadeTransition(
-            opacity: _fadeAnimation,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Benvenuto a Miglionico!',
-                  style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-                const SizedBox(height: 50),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/menu');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.brown[700],
-                    padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 14),
-                    textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 5,
-                  ),
-                  child: const Text('Entra nel Menu'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// MENU PRINCIPALE (MenuScreen)
-class MenuScreen extends StatefulWidget {
-  const MenuScreen({Key? key}) : super(key: key);
-
-  @override
-  State<MenuScreen> createState() => _MenuScreenState();
-}
-
-class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Esplora Miglionico',
+          'Notizie e Aggiornamenti',
           style: TextStyle(fontFamily: 'Raleway'),
         ),
-        backgroundColor: Colors.brown[900],
+        backgroundColor: Colors.teal,
       ),
       drawer: Drawer(
         child: ListView(
@@ -158,12 +71,7 @@ class _MenuScreenState extends State<MenuScreen> {
           ],
         ),
       ),
-      body: Center(
-        child: const Text(
-          'Benvenuto a Miglionico!',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
+      body: const NewsScreen(), // Mostra la schermata delle notizie come contenuto principale
     );
   }
 
@@ -358,5 +266,3 @@ class ContactsScreen extends StatelessWidget {
     );
   }
 }
-
-
