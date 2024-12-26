@@ -18,13 +18,8 @@ class MyApp extends StatelessWidget {
       // Rotta iniziale
       initialRoute: '/',
       routes: {
-        // Rotta che punta alla WelcomeScreen (schermata di benvenuto)
         '/': (context) => const WelcomeScreen(),
-
-        // Rotta che punta al MenuScreen
         '/menu': (context) => const MenuScreen(),
-
-        // Altre rotte: le classi corrispondenti sono definite sotto
         '/history': (context) => const HistoryScreen(),
         '/places': (context) => const PlacesScreen(),
         '/events': (context) => const EventsScreen(),
@@ -32,8 +27,6 @@ class MyApp extends StatelessWidget {
         '/news': (context) => const NewsScreen(),
         '/shop': (context) => const ShopScreen(),
         '/pagoPA': (context) => const PagoPAScreen(),
-
-        // Esempi di altre schermate se vuoi
         '/contacts': (context) => const ContactsScreen(),
         '/about': (context) => const AboutScreen(),
       },
@@ -78,11 +71,10 @@ class WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Contenitore con gradiente di sfondo
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF5D4037), Color(0xFF3E2723)], // gradiente marrone
+            colors: [Color(0xFF5D4037), Color(0xFF3E2723)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -93,7 +85,6 @@ class WelcomeScreenState extends State<WelcomeScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Testo Animato
                 AnimatedTextKit(
                   animatedTexts: [
                     TypewriterAnimatedText(
@@ -121,14 +112,13 @@ class WelcomeScreenState extends State<WelcomeScreen>
                   stopPauseOnTap: true,
                 ),
                 const SizedBox(height: 50),
-                // Pulsante che porta al Menu
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/menu');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,  // sfondo pulsante
-                    foregroundColor: Colors.brown[700],  // testo pulsante
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.brown[700],
                     padding:
                     const EdgeInsets.symmetric(horizontal: 36, vertical: 14),
                     textStyle: const TextStyle(
@@ -151,7 +141,7 @@ class WelcomeScreenState extends State<WelcomeScreen>
   }
 }
 
-/// MENU PRINCIPALE (MenuScreen) - (Il tuo VECCHIO CODICE)
+/// MENU PRINCIPALE (MenuScreen)
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
 
@@ -159,38 +149,7 @@ class MenuScreen extends StatefulWidget {
   State<MenuScreen> createState() => _MenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<Color?> _colorAnimation1;
-  late Animation<Color?> _colorAnimation2;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 5),
-    )..repeat(reverse: true);
-
-    _colorAnimation1 = ColorTween(
-      begin: Colors.brown[300],
-      end: Colors.teal[300],
-    ).animate(_controller);
-
-    _colorAnimation2 = ColorTween(
-      begin: Colors.orange[300],
-      end: Colors.purple[300],
-    ).animate(_controller);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,123 +159,55 @@ class _MenuScreenState extends State<MenuScreen>
           style: TextStyle(fontFamily: 'Raleway'),
         ),
         backgroundColor: Colors.brown[900],
-        elevation: 0,
       ),
-      body: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  _colorAnimation1.value ?? Colors.brown,
-                  _colorAnimation2.value ?? Colors.orange,
-                ],
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.teal),
+              child: const Text(
+                'Menu Principale',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                children: [
-                  _buildMenuTile(
-                    context,
-                    'Storia di Miglionico',
-                    FontAwesomeIcons.book,
-                    Colors.teal,
-                    '/history',
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Luoghi da Visitare',
-                    FontAwesomeIcons.mapMarkerAlt,
-                    Colors.blueAccent,
-                    '/places',
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Eventi e Feste',
-                    FontAwesomeIcons.calendarAlt,
-                    Colors.orange,
-                    '/events',
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Dove Mangiare',
-                    FontAwesomeIcons.utensils,
-                    Colors.redAccent,
-                    '/food',
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Notizie e Aggiornamenti',
-                    FontAwesomeIcons.newspaper,
-                    Colors.green,
-                    '/news',
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Acquista Prodotti Locali',
-                    FontAwesomeIcons.shoppingBasket,
-                    Colors.purple,
-                    '/shop',
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'PagoPA',
-                    FontAwesomeIcons.creditCard,
-                    Colors.green,
-                    '/pagoPA',
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+            _buildDrawerTile(context, 'Storia di Miglionico',
+                FontAwesomeIcons.book, '/history'),
+            _buildDrawerTile(context, 'Luoghi da Visitare',
+                FontAwesomeIcons.mapMarkerAlt, '/places'),
+            _buildDrawerTile(context, 'Eventi e Feste',
+                FontAwesomeIcons.calendarAlt, '/events'),
+            _buildDrawerTile(context, 'Dove Mangiare',
+                FontAwesomeIcons.utensils, '/food'),
+            _buildDrawerTile(context, 'Notizie e Aggiornamenti',
+                FontAwesomeIcons.newspaper, '/news'),
+            _buildDrawerTile(context, 'Acquista Prodotti Locali',
+                FontAwesomeIcons.shoppingBasket, '/shop'),
+            _buildDrawerTile(context, 'PagoPA',
+                FontAwesomeIcons.creditCard, '/pagoPA'),
+          ],
+        ),
+      ),
+      body: Center(
+        child: const Text(
+          'Benvenuto a Miglionico!',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
 
-  Widget _buildMenuTile(
-      BuildContext context,
-      String title,
-      IconData icon,
-      Color color,
-      String route,
-      ) {
-    return GestureDetector(
+  Widget _buildDrawerTile(
+      BuildContext context, String title, IconData icon, String route) {
+    return ListTile(
+      leading: FaIcon(icon, color: Colors.teal),
+      title: Text(title),
       onTap: () {
         Navigator.pushNamed(context, route);
       },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        color: color,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(
-              icon,
-              color: Colors.white,
-              size: 40,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -332,18 +223,17 @@ class HistoryScreen extends StatelessWidget {
         title: const Text('Storia di Miglionico'),
         backgroundColor: Colors.brown[900],
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          'Un po\' di storia...',
-          style: TextStyle(fontSize: 18),
-        ),
+      body: const Center(
+        child: Text('Un po\' di storia...'),
       ),
     );
   }
 }
 
-/// SCHERMATA PLACES (esempio “Luoghi da Visitare”)
+/// Altre schermate seguono lo stesso schema (PlacesScreen, EventsScreen, ecc.)
+// Implementa tutte le schermate per le rotte già definite sopra.
+
+/// SCHERMATA PLACES
 class PlacesScreen extends StatelessWidget {
   const PlacesScreen({Key? key}) : super(key: key);
 
@@ -355,7 +245,10 @@ class PlacesScreen extends StatelessWidget {
         backgroundColor: Colors.brown[900],
       ),
       body: const Center(
-        child: Text('Qui puoi mostrare i luoghi da visitare a Miglionico!'),
+        child: Text(
+          'Qui puoi mostrare i luoghi da visitare a Miglionico!',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }
@@ -365,27 +258,53 @@ class PlacesScreen extends StatelessWidget {
 class EventsScreen extends StatelessWidget {
   const EventsScreen({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Eventi e Feste'),
+        backgroundColor: Colors.brown[900],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: [
+          _buildEventCard(
+            title: 'Festa Medievale',
+            date: '12 Dicembre 2024',
+            description: 'Un tuffo nel passato con costumi e spettacoli medievali.',
+          ),
+          const SizedBox(height: 16),
+          _buildEventCard(
+            title: 'Sagra del Pane',
+            date: '18 Gennaio 2025',
+            description: 'Degustazione di pane tradizionale e prodotti locali.',
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildEventCard({
     required String title,
     required String date,
     required String description,
   }) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                )),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.brown,
+              ),
+            ),
             const SizedBox(height: 4),
             Text(
               date,
@@ -408,35 +327,9 @@ class EventsScreen extends StatelessWidget {
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Eventi'),
-        backgroundColor: Colors.brown,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          _buildEventCard(
-            title: 'Festa Medievale',
-            date: '12 Dicembre 2024',
-            description: 'Un tuffo nel passato con costumi e spettacoli.',
-          ),
-          const SizedBox(height: 16),
-          _buildEventCard(
-            title: 'Sagra del Pane',
-            date: '18 Gennaio 2025',
-            description: 'Degustazione di pane tradizionale.',
-          ),
-        ],
-      ),
-    );
-  }
 }
 
-/// SCHERMATA FOOD (esempio “Dove Mangiare”)
+/// SCHERMATA FOOD
 class FoodScreen extends StatelessWidget {
   const FoodScreen({Key? key}) : super(key: key);
 
@@ -448,13 +341,16 @@ class FoodScreen extends StatelessWidget {
         backgroundColor: Colors.brown[900],
       ),
       body: const Center(
-        child: Text('Lista dei ristoranti, pizzerie, ecc.'),
+        child: Text(
+          'Qui puoi mostrare una lista di ristoranti, pizzerie e trattorie locali.',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }
 }
 
-/// SCHERMATA NEWS (esempio “Notizie e Aggiornamenti”)
+/// SCHERMATA NEWS
 class NewsScreen extends StatelessWidget {
   const NewsScreen({Key? key}) : super(key: key);
 
@@ -466,13 +362,16 @@ class NewsScreen extends StatelessWidget {
         backgroundColor: Colors.brown[900],
       ),
       body: const Center(
-        child: Text('Qui inserisci le ultime notizie su Miglionico.'),
+        child: Text(
+          'Qui puoi inserire le ultime notizie su Miglionico e gli aggiornamenti per i cittadini.',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }
 }
 
-/// SCHERMATA SHOP (esempio “Acquista Prodotti Locali”)
+/// SCHERMATA SHOP
 class ShopScreen extends StatelessWidget {
   const ShopScreen({Key? key}) : super(key: key);
 
@@ -484,7 +383,10 @@ class ShopScreen extends StatelessWidget {
         backgroundColor: Colors.brown[900],
       ),
       body: const Center(
-        child: Text('Elenco di prodotti locali da acquistare.'),
+        child: Text(
+          'Elenco di prodotti locali disponibili per l\'acquisto.',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }
@@ -504,7 +406,6 @@ class _PagoPAScreenState extends State<PagoPAScreen> {
   @override
   void initState() {
     super.initState();
-    // Se hai bisogno di impostare la piattaforma per la WebView su Android
     WebView.platform = SurfaceAndroidWebView();
   }
 
@@ -512,7 +413,7 @@ class _PagoPAScreenState extends State<PagoPAScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("PagoPA"),
+        title: const Text('PagoPA'),
         backgroundColor: Colors.brown[900],
       ),
       body: WebView(
@@ -527,7 +428,7 @@ class _PagoPAScreenState extends State<PagoPAScreen> {
   }
 }
 
-/// SCHERMATA CONTATTI (facoltativa)
+/// SCHERMATA CONTATTI
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({Key? key}) : super(key: key);
 
@@ -536,11 +437,11 @@ class ContactsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contatti'),
-        backgroundColor: Colors.brown,
+        backgroundColor: Colors.brown[900],
       ),
       body: const Center(
         child: Text(
-          'Questa è la schermata dei Contatti!',
+          'Elenco dei contatti del Comune di Miglionico.',
           style: TextStyle(fontSize: 18),
         ),
       ),
@@ -548,14 +449,17 @@ class ContactsScreen extends StatelessWidget {
   }
 }
 
-/// SCHERMATA ABOUT (facoltativa)
+/// SCHERMATA ABOUT
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Non ho messo un AppBar qui, ma puoi aggiungerla se vuoi
+      appBar: AppBar(
+        title: const Text('About Miglionico Mobile'),
+        backgroundColor: Colors.brown[900],
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -574,7 +478,7 @@ class AboutScreen extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                'Un\'app per scoprire eventi e storie su Miglionico.',
+                'Un\'app dedicata a cittadini e turisti per scoprire Miglionico.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
@@ -585,3 +489,4 @@ class AboutScreen extends StatelessWidget {
     );
   }
 }
+

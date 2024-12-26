@@ -50,6 +50,67 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
         backgroundColor: Colors.brown[900],
         elevation: 0,
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.teal,
+              ),
+              child: const Text(
+                'Menu Principale',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            _buildDrawerTile(
+              context,
+              'Storia di Miglionico',
+              FontAwesomeIcons.book,
+              '/history',
+            ),
+            _buildDrawerTile(
+              context,
+              'Luoghi da Visitare',
+              FontAwesomeIcons.mapMarkerAlt,
+              '/places',
+            ),
+            _buildDrawerTile(
+              context,
+              'Eventi e Feste',
+              FontAwesomeIcons.calendarAlt,
+              '/events',
+            ),
+            _buildDrawerTile(
+              context,
+              'Dove Mangiare',
+              FontAwesomeIcons.utensils,
+              '/food',
+            ),
+            _buildDrawerTile(
+              context,
+              'Notizie e Aggiornamenti',
+              FontAwesomeIcons.newspaper,
+              '/news',
+            ),
+            _buildDrawerTile(
+              context,
+              'Acquista Prodotti Locali',
+              FontAwesomeIcons.shoppingBasket,
+              '/shop',
+            ),
+            _buildDrawerTile(
+              context,
+              'PagoPA',
+              FontAwesomeIcons.creditCard,
+              '/pagoPA',
+            ),
+          ],
+        ),
+      ),
       body: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
@@ -64,63 +125,14 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
                 ],
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                children: [
-                  _buildMenuTile(
-                    context,
-                    'Storia di Miglionico',
-                    FontAwesomeIcons.book,
-                    Colors.teal,
-                    '/history', // Assicurati che questa rotta sia definita
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Luoghi da Visitare',
-                    FontAwesomeIcons.mapMarkerAlt,
-                    Colors.blueAccent,
-                    '/places', // Assicurati che questa rotta sia definita
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Eventi e Feste',
-                    FontAwesomeIcons.calendarAlt,
-                    Colors.orange,
-                    '/events', // Assicurati che questa rotta sia definita
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Dove Mangiare',
-                    FontAwesomeIcons.utensils,
-                    Colors.redAccent,
-                    '/food', // Assicurati che questa rotta sia definita
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Notizie e Aggiornamenti',
-                    FontAwesomeIcons.newspaper,
-                    Colors.green,
-                    '/news', // Assicurati che questa rotta sia definita
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'Acquista Prodotti Locali',
-                    FontAwesomeIcons.shoppingBasket,
-                    Colors.purple,
-                    '/shop', // Assicurati che questa rotta sia definita
-                  ),
-                  _buildMenuTile(
-                    context,
-                    'PagoPA',
-                    FontAwesomeIcons.creditCard,
-                    Colors.green,
-                    '/pagoPA', // Aggiungi la rotta per PagoPA
-                  ),
-                ],
+            child: Center(
+              child: const Text(
+                'Benvenuto a Miglionico',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           );
@@ -129,42 +141,16 @@ class _MenuScreenState extends State<MenuScreen> with SingleTickerProviderStateM
     );
   }
 
-  Widget _buildMenuTile(
-      BuildContext context,
-      String title,
-      IconData icon,
-      Color color,
-      String route,
-      ) {
-    return GestureDetector(
+  Widget _buildDrawerTile(BuildContext context, String title, IconData icon, String route) {
+    return ListTile(
+      leading: FaIcon(
+        icon,
+        color: Colors.teal,
+      ),
+      title: Text(title),
       onTap: () {
         Navigator.pushNamed(context, route);
       },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        color: color,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(
-              icon,
-              color: Colors.white,
-              size: 40,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
