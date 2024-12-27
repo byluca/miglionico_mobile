@@ -5,13 +5,13 @@ import 'screens/menu/News.dart';
 import 'screens/menu/Weather.dart';
 import 'screens/menu/Contacts.dart';
 import 'screens/menu/Feedback.dart';
-import 'screens/menu/IMU.dart';
 import 'screens/menu/MenuScreen.dart';
 import 'screens/menu/PagoPA.dart';
 import 'screens/menu/Recycling.dart';
 import 'screens/menu/Reservations.dart';
 import 'screens/menu/SchoolCanteen.dart';
 import 'screens/menu/SchoolTransport.dart';
+
 
 
 void main() {
@@ -80,7 +80,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => const WelcomeScreen(),
         '/main': (context) => const MainScreen(),
         '/weather': (context) => const WeatherScreen(), // Usa la NUOVA classe
-        '/imu': (context) => const IMUScreen(),
         '/schoolCanteen': (context) => const SchoolCanteenScreen(),
         '/schoolTransport': (context) => const SchoolTransportScreen(),
         '/feedback': (context) => const FeedbackScreen(),
@@ -141,7 +140,6 @@ class MainScreen extends StatelessWidget {
               ),
             ),
             _buildDrawerTile(context, 'Meteo', FontAwesomeIcons.cloudSun, '/weather'),
-            _buildDrawerTile(context, 'IMU IUC TASI', FontAwesomeIcons.moneyCheckDollar, '/imu'),
             _buildDrawerTile(context, 'PagoPA', FontAwesomeIcons.creditCard, '/pagoPA'),
             _buildDrawerTile(context, 'Mensa Scolastica', FontAwesomeIcons.utensils, '/schoolCanteen'),
             _buildDrawerTile(context, 'Trasporto Scolastico', FontAwesomeIcons.bus, '/schoolTransport'),
