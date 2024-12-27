@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({Key? key}) : super(key: key);
@@ -10,11 +9,17 @@ class ContactsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Contatti e Info'),
       ),
-      body: const Center(
-        child: Text(
-          'Dettagli di contatto e informazioni utili.',
-          style: TextStyle(fontSize: 18),
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'Dettagli di contatto e informazioni utili.',
+            style: TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
